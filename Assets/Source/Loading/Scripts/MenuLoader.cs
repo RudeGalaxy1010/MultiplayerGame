@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OnConnectedMenuLoader : MonoBehaviour
+public class MenuLoader : MonoBehaviour
 {
     [SerializeField] private CreateConnectionToServer _createConnectionToServer;
     [SerializeField] private SceneLoader _sceneLoader;
