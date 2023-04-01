@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class PlayerBootstrap : MonoBehaviour
 {
+    [SerializeField] private PlayerSpawner _spawner;
     [SerializeField] private PlayerInput _input;
-    [SerializeField] private PlayerMove _playerMove;
 
-    private void Awake()
+    private void Start()
     {
-        _playerMove.Construct(_input);
+        Player player = _spawner.CreatePlayer();
+        player.Construct(_input);
     }
 }

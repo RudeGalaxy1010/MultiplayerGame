@@ -2,7 +2,7 @@ using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerMove : MonoBehaviour
+public class PlayerMove : MonoBehaviour, IPhotonDependComponent
 {
     private readonly Vector2 _borders = new Vector2(2.31f, 4.5f);
 
@@ -17,16 +17,13 @@ public class PlayerMove : MonoBehaviour
         _input = input;
     }
 
-    private void Awake()
-    {
-        if (_photonView.IsMine == false)
-        {
-            enabled = false;
-        }
-    }
-
     private void Update()
     {
+        if (_input == null)
+        {
+            return;
+        }
+
         Vector3 targetPosition = transform.position + (Vector3)_input.Velocity;
         Vector3 nextPosition = Vector3.MoveTowards(transform.position, targetPosition, _speed * Time.deltaTime);
         transform.position = GetClampedPosition(nextPosition);
