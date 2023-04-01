@@ -4,6 +4,7 @@ using UnityEngine;
 public class CoinsCollector : MonoBehaviour
 {
     private const string AddCoinsRPCMethodName = "AddCoins";
+    private const string CoinDestroyRPCMethodName = "Destroy";
 
     [SerializeField] private PhotonView _photonView;
 
@@ -12,12 +13,17 @@ public class CoinsCollector : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out Coin coin))
         {
             ApplyCoins(coin.Value);
-            coin.Destroy();
+            DestroyCoin(coin);
         }
     }
 
     private void ApplyCoins(int value)
     {
         _photonView.RPC(AddCoinsRPCMethodName, RpcTarget.All, value);
+    }
+
+    private void DestroyCoin(Coin coin)
+    {
+        coin.PhotonView.RPC(CoinDestroyRPCMethodName, RpcTarget.All);
     }
 }

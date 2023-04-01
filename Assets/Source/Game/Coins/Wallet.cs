@@ -6,6 +6,8 @@ public class Wallet : MonoBehaviour
 {
     private const string DamageLessThanZeroMessage = "Coins value can't be less or equal 0";
 
+    public event Action<int> CoinsValueChanged;
+
     private int _coins;
 
     [PunRPC]
@@ -17,5 +19,6 @@ public class Wallet : MonoBehaviour
         }
 
         _coins += value;
+        CoinsValueChanged?.Invoke(_coins);
     }
 }

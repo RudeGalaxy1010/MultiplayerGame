@@ -1,21 +1,21 @@
+using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
 public class Coin : MonoBehaviour
 {
+    [SerializeField] private PhotonView _photonView;
     [SerializeField] private int _value;
 
-    private CoinsSpawner _coinsSpawner;
-
     public int Value => _value;
+    public PhotonView PhotonView => _photonView;
 
-    public void Construct(CoinsSpawner coinsSpawner)
-    {
-        _coinsSpawner = coinsSpawner;
-    }
-
+    [PunRPC]
     public void Destroy()
     {
-        _coinsSpawner.DestroyCoin(this);
+        if (_photonView.IsMine)
+        {
+            PhotonNetwork.Destroy(gameObject);
+        }
     }
 }

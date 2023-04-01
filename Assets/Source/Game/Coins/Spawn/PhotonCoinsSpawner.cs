@@ -17,14 +17,8 @@ public class PhotonCoinsSpawner : CoinsSpawner
 
         for (int i = 0; i < CoinsCount; i++)
         {
-            Coin coin = CreateCoin(Random.insideUnitCircle * SpawnRadius);
-            coin.Construct(this);
+            CreateCoin(Random.insideUnitCircle * SpawnRadius);
         }
-    }
-
-    public override void DestroyCoin(Coin coin)
-    {
-        PhotonNetwork.Destroy(coin.gameObject);
     }
 
     private Coin CreateCoin(Vector2 at)
