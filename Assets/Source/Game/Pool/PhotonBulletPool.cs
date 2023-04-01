@@ -48,13 +48,14 @@ public class PhotonBulletPool : BulletPool
     public override void Return(Bullet bullet)
     {
         bullet.gameObject.SetActive(false);
+        bullet.transform.position = transform.position;
         bullet.transform.SetParent(transform);
         _bullets.Add(bullet);
     }
 
     private Bullet CreateBullet()
     {
-        Bullet bullet = PhotonNetwork.Instantiate(Prefab.name, Vector2.zero, Quaternion.identity).GetComponent<Bullet>();
+        Bullet bullet = PhotonNetwork.Instantiate(Prefab.name, transform.position, Quaternion.identity).GetComponent<Bullet>();
         bullet.gameObject.SetActive(false);
         bullet.transform.SetParent(transform);
         _bullets.Add(bullet);

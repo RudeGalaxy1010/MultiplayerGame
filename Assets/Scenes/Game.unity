@@ -358,6 +358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawner: {fileID: 1354953700}
   _input: {fileID: 53120543}
+  _bulletPool: {fileID: 1230266706}
 --- !u!1001 &1388820538
 PrefabInstance:
   m_ObjectHideFlags: 0

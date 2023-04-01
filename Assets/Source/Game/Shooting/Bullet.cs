@@ -25,6 +25,7 @@ public class Bullet : MonoBehaviour
         if (Vector2.Distance(Vector2.zero, transform.position) >= MaxDistance)
         {
             Destroy();
+            return;
         }
 
         Vector2 targetPosition = (Vector2)transform.position + _direction.Value;
