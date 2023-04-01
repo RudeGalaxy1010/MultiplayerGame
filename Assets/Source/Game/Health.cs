@@ -21,14 +21,14 @@ public class Health : MonoBehaviourPun
     public float HealthPerc => (float)_currentHealth / MaxHelath;
 
     [PunRPC]
-    public void TakeDamage(int damage)
+    public void TakeDamage(int value)
     {
-        if (damage <= 0)
+        if (value <= 0)
         {
             throw new ArgumentException(DamageLessThanZeroMessage);
         }
 
-        _currentHealth -= damage;
+        _currentHealth -= value;
         HealthChanged?.Invoke();
 
         if (_currentHealth < 0)

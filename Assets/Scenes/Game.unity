@@ -312,7 +312,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawner: {fileID: 1354953700}
   _input: {fileID: 53120543}
-  _bulletPoolPrefab: {fileID: 5638629923501929990, guid: 33eba6415e27f4a49adcb9f76e1004e8, type: 3}
 --- !u!1001 &1388820538
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -527,6 +526,53 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &2096035159
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2096035160}
+  - component: {fileID: 2096035161}
+  m_Layer: 0
+  m_Name: CoinsSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2096035160
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2096035159}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2096035161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2096035159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9b8e823fd2eb534781b84f76b344a2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CoinPrefab: {fileID: 4503886505211735720, guid: 0b00747e93ea74846ab7b7b270c4078b, type: 3}
+  CoinsCount: 25
+  SpawnRadius: 2.25
 --- !u!1 &2146807610
 GameObject:
   m_ObjectHideFlags: 0
