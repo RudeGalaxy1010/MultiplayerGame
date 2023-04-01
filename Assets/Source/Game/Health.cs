@@ -5,17 +5,19 @@ public class Health : MonoBehaviour
 {
     private const string DamageLessThanZeroMessage = "Damage can't be less or equal 0";
 
-    public event Action<int> HealthChanged;
+    public event Action HealthChanged;
     public event Action Died;
 
     [SerializeField] private int MaxHelath;
 
-    private int _health;
+    private int _currentHealth;
 
     public void Construct()
     {
-        _health = MaxHelath;
+        _currentHealth = MaxHelath;
     }
+
+    public float HealthPerc => (float)_currentHealth / MaxHelath;
 
     public void TakeDamage(int damage)
     {
@@ -24,10 +26,10 @@ public class Health : MonoBehaviour
             throw new ArgumentException(DamageLessThanZeroMessage);
         }
 
-        _health -= damage;
-        HealthChanged?.Invoke(_health);
+        _currentHealth -= damage;
+        HealthChanged?.Invoke();
 
-        if (_health < 0)
+        if (_currentHealth < 0)
         {
             Died?.Invoke();
         }
