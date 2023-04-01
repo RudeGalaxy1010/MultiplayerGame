@@ -1,12 +1,16 @@
 using Photon.Pun;
+using System;
 using UnityEngine;
+using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMove : MonoBehaviour, IPhotonDependComponent
 {
     private readonly Vector2 _borders = new Vector2(2.31f, 4.5f);
 
-    [SerializeField] private float _speed;
+    [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _rotationSpeed;
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private PhotonView _photonView;
 
@@ -24,9 +28,25 @@ public class PlayerMove : MonoBehaviour, IPhotonDependComponent
             return;
         }
 
+        Move();
+        Rotate();
+    }
+
+    private void Move()
+    {
         Vector2 targetPosition = (Vector2)transform.position + _input.Velocity;
-        Vector2 nextPosition = Vector2.MoveTowards(transform.position, targetPosition, _speed * Time.deltaTime);
+        Vector2 nextPosition = Vector2.MoveTowards(transform.position, targetPosition, _moveSpeed * Time.deltaTime);
         transform.position = GetClampedPosition(nextPosition);
+    }
+
+    private void Rotate()
+    {
+        if (_input.Velocity == Vector2.zero)
+        {
+            return;
+        }
+
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, (Vector3)_input.Velocity.normalized);
     }
 
     private Vector3 GetClampedPosition(Vector3 position)
