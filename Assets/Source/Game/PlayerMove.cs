@@ -4,13 +4,12 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMove : MonoBehaviour
 {
-    private const float _borderOffset = 0.5f;
+    private readonly Vector2 _borders = new Vector2(2.31f, 4.5f);
 
     [SerializeField] private float _speed;
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private PhotonView _photonView;
 
-    private Vector2 _borders;
     private PlayerInput _input;
 
     public void Construct(PlayerInput input)
@@ -24,8 +23,6 @@ public class PlayerMove : MonoBehaviour
         {
             enabled = false;
         }
-
-        _borders = GetBorders();
     }
 
     private void Update()
@@ -40,13 +37,6 @@ public class PlayerMove : MonoBehaviour
         float clampedX = Mathf.Clamp(position.x, -_borders.x, _borders.x);
         float clampedY = Mathf.Clamp(position.y, -_borders.y, _borders.y);
         return new Vector3(clampedX, clampedY, 0);
-    }
-
-    private Vector2 GetBorders()
-    {
-        Vector3 screenSpace = new Vector3(Screen.width, Screen.height, 0);
-        Vector3 offset = Vector3.one * _borderOffset;
-        return Camera.main.ScreenToWorldPoint(screenSpace) - offset;
     }
 
     private void OnDrawGizmos()
