@@ -17,14 +17,14 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-        if (_direction == null)
-        {
-            return;
-        }
-
         if (Vector2.Distance(Vector2.zero, transform.position) >= MaxDistance)
         {
             Destroy();
+            return;
+        }
+
+        if (_direction == null)
+        {
             return;
         }
 
@@ -33,7 +33,7 @@ public class Bullet : MonoBehaviour
         transform.position = nextPosition;
     }
 
-    private void Destroy()
+    public void Destroy()
     {
         _direction = null;
         _pool.Return(this);
