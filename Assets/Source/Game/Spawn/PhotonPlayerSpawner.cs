@@ -4,9 +4,18 @@ using UnityEngine;
 public class PhotonPlayerSpawner : PlayerSpawner
 {
     [SerializeField] private Player _prefab;
+    [SerializeField] private Transform _masterSpawnPoint;
+    [SerializeField] private Transform _slaveSpawnPoint;
 
     public override Player CreatePlayer()
     {
-        return PhotonNetwork.Instantiate(_prefab.name, Vector2.zero, Quaternion.identity).GetComponent<Player>();
+        Vector2 spawnPosition = _masterSpawnPoint.position;
+
+        if (PhotonNetwork.IsMasterClient == false)
+        {
+            spawnPosition = _slaveSpawnPoint.position;
+        }
+
+        return PhotonNetwork.Instantiate(_prefab.name, spawnPosition, Quaternion.identity).GetComponent<Player>();
     }
 }

@@ -3,6 +3,11 @@ using UnityEngine;
 
 public class PhotonCoinsSpawner : CoinsSpawner
 {
+    private void Start()
+    {
+        CreateCoins();
+    }
+
     public override void CreateCoins()
     {
         if (PhotonNetwork.IsMasterClient == false)
