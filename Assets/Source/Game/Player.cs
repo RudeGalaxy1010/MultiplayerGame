@@ -1,7 +1,8 @@
+using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Health), typeof(PlayerMove), typeof(Shooting))]
-public class Player : MonoBehaviour
+public class Player : MonoBehaviourPun
 {
     [SerializeField] private Health _health;
     [SerializeField] private PlayerMove _move;
@@ -10,6 +11,7 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         _health.Died += OnDied;
+        Debug.Log(GetComponent<PhotonView>().ViewID);
     }
 
     private void OnDisable()

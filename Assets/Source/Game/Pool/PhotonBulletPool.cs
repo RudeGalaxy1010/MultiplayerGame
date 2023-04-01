@@ -21,7 +21,7 @@ public class PhotonBulletPool : BulletPool
         }
     }
 
-    public override Bullet Get()
+    public override Bullet Instantiate()
     {
         Bullet bullet = null;
 
@@ -45,7 +45,7 @@ public class PhotonBulletPool : BulletPool
         return bullet;
     }
 
-    public override void Return(Bullet bullet)
+    public override void Destroy(Bullet bullet)
     {
         bullet.gameObject.SetActive(false);
         bullet.transform.position = transform.position;

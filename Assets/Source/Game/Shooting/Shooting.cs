@@ -32,7 +32,7 @@ public class Shooting : MonoBehaviour, IPhotonDependComponent
 
     private void Fire()
     {
-        Bullet bullet = _bulletPool.Get();
+        Bullet bullet = _bulletPool.Instantiate();
         bullet.transform.position = _firePoint.position;
         bullet.Construct(transform.up, _bulletPool);
 

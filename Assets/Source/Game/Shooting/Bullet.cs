@@ -36,6 +36,6 @@ public class Bullet : MonoBehaviour
     public void Destroy()
     {
         _direction = null;
-        _pool.Return(this);
+        _pool.Destroy(this);
     }
 }
