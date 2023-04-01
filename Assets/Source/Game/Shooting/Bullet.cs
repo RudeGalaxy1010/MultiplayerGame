@@ -7,12 +7,12 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float _speed;
 
     private Vector2? _direction;
-    private BulletPool _pool;
+    private BulletSpawner _spawner;
 
-    public void Construct(Vector2 direction, BulletPool pool)
+    public void Construct(Vector2 direction, BulletSpawner spawner)
     {
         _direction = direction;
-        _pool = pool;
+        _spawner = spawner;
     }
 
     private void Update()
@@ -36,6 +36,6 @@ public class Bullet : MonoBehaviour
     public void Destroy()
     {
         _direction = null;
-        _pool.Destroy(this);
+        _spawner.Destroy(this);
     }
 }

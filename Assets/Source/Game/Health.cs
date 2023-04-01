@@ -1,7 +1,8 @@
+using Photon.Pun;
 using System;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class Health : MonoBehaviourPun
 {
     private const string DamageLessThanZeroMessage = "Damage can't be less or equal 0";
 
@@ -12,13 +13,14 @@ public class Health : MonoBehaviour
 
     private int _currentHealth;
 
-    public void Construct()
+    private void Start()
     {
         _currentHealth = MaxHelath;
     }
 
     public float HealthPerc => (float)_currentHealth / MaxHelath;
 
+    [PunRPC]
     public void TakeDamage(int damage)
     {
         if (damage <= 0)

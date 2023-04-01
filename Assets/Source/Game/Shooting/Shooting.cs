@@ -1,18 +1,18 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(BulletSpawner))]
 public class Shooting : MonoBehaviour, IPhotonDependComponent
 {
     [SerializeField] private Transform _firePoint;
     [SerializeField] private float _fireRate;
+    [SerializeField] private BulletSpawner _bulletSpawner;
 
-    private BulletPool _bulletPool;
     private float _cooldownTime;
     private bool _isCoolDown;
 
-    public void Construct(BulletPool bulletPool)
+    private void Start()
     {
-        _bulletPool = bulletPool;
         _cooldownTime = 1f / _fireRate;
         _isCoolDown = false;
     }
@@ -32,10 +32,8 @@ public class Shooting : MonoBehaviour, IPhotonDependComponent
 
     private void Fire()
     {
-        Bullet bullet = _bulletPool.Instantiate();
-        bullet.transform.position = _firePoint.position;
-        bullet.Construct(transform.up, _bulletPool);
-
+        Bullet bullet = _bulletSpawner.Instantiate(_firePoint.position);
+        bullet.Construct(transform.up, _bulletSpawner);
         _isCoolDown = true;
         StartCoroutine(ProcessCooldown(_cooldownTime));
     }

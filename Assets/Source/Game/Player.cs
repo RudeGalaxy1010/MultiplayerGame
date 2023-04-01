@@ -11,7 +11,6 @@ public class Player : MonoBehaviourPun
     private void OnEnable()
     {
         _health.Died += OnDied;
-        Debug.Log(GetComponent<PhotonView>().ViewID);
     }
 
     private void OnDisable()
@@ -19,11 +18,9 @@ public class Player : MonoBehaviourPun
         _health.Died -= OnDied;
     }
 
-    public void Construct(PlayerInput playerInput, BulletPool bulletPool)
+    public void Construct(PlayerInput playerInput)
     {
-        _health.Construct();
         _move.Construct(playerInput);
-        _shooting.Construct(bulletPool);
     }
 
     private void OnDied()
