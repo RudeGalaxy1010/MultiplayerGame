@@ -24,8 +24,8 @@ public class PlayerMove : MonoBehaviour, IPhotonDependComponent
             return;
         }
 
-        Vector3 targetPosition = transform.position + (Vector3)_input.Velocity;
-        Vector3 nextPosition = Vector3.MoveTowards(transform.position, targetPosition, _speed * Time.deltaTime);
+        Vector2 targetPosition = (Vector2)transform.position + _input.Velocity;
+        Vector2 nextPosition = Vector2.MoveTowards(transform.position, targetPosition, _speed * Time.deltaTime);
         transform.position = GetClampedPosition(nextPosition);
     }
 
