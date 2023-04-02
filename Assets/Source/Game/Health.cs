@@ -31,7 +31,7 @@ public class Health : MonoBehaviourPun
         _currentHealth -= value;
         HealthChanged?.Invoke();
 
-        if (_currentHealth < 0)
+        if (_currentHealth <= 0)
         {
             Died?.Invoke();
         }

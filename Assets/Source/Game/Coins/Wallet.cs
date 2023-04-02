@@ -10,6 +10,8 @@ public class Wallet : MonoBehaviour
 
     private int _coins;
 
+    public int Coins => _coins;
+
     [PunRPC]
     public void AddCoins(int value)
     {
