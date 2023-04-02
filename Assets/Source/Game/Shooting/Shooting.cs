@@ -30,16 +30,16 @@ public class Shooting : MonoBehaviour, IPhotonDependComponent
 
     private void OnFireButtonPressed()
     {
-        if (_isCoolDown == true)
-        {
-            return;
-        }
-
         Fire();
     }
 
     private void Fire()
     {
+        if (_isCoolDown == true)
+        {
+            return;
+        }
+
         Bullet bullet = _bulletSpawner.Instantiate(_firePoint.position);
         bullet.Construct(transform.up, _bulletSpawner);
         _isCoolDown = true;

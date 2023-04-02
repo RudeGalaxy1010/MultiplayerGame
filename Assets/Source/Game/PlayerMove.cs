@@ -1,13 +1,10 @@
 using Photon.Pun;
-using System;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMove : MonoBehaviour, IPhotonDependComponent
 {
-    private readonly Vector2 _borders = new Vector2(2.31f, 4.5f);
+    private readonly Vector2 _borders = new Vector2(8.4f, 4.5f);
 
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _rotationSpeed;
