@@ -289,6 +289,7 @@ GameObject:
   - component: {fileID: 562393563230468917}
   - component: {fileID: 4397977797738183448}
   - component: {fileID: 338250706476710982}
+  - component: {fileID: 1318045929439108356}
   - component: {fileID: 7773009237815430225}
   - component: {fileID: 6116858953774195481}
   - component: {fileID: 150159536052164416}
@@ -517,6 +518,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _photonView: {fileID: 6116858953774195481}
+--- !u!114 &1318045929439108356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6116858953774195484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcab70542910b2f42946ab997cef6e4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _photonView: {fileID: 6116858953774195481}
+  _playerSpriteRenderer: {fileID: 6116858953774195485}
+  _masterColor: {r: 0.93333334, g: 0.3529412, b: 0.14117648, a: 1}
+  _slaveColor: {r: 0.023529412, g: 0.32156864, b: 0.8666667, a: 1}
 --- !u!114 &7773009237815430225
 MonoBehaviour:
   m_ObjectHideFlags: 0
