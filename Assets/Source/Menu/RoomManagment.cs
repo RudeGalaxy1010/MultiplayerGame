@@ -6,6 +6,14 @@ public class RoomManagment : MonoBehaviour
 {
     private const int MaxPlayers = 2;
 
+    private void Start()
+    {
+        if (PhotonNetwork.CurrentRoom != null)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+    }
+
     public void CreateRoom(string nickName, string roomName)
     {
         PhotonNetwork.NickName = nickName;
