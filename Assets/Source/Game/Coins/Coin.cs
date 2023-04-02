@@ -2,7 +2,7 @@ using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-public class Coin : MonoBehaviour
+public class Coin : MonoBehaviour, IPunObservable
 {
     [SerializeField] private PhotonView _photonView;
     [SerializeField] private int _value;
@@ -10,12 +10,20 @@ public class Coin : MonoBehaviour
     public int Value => _value;
     public PhotonView PhotonView => _photonView;
 
-    [PunRPC]
     public void Destroy()
     {
-        if (_photonView.IsMine)
+        gameObject.SetActive(false);
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
         {
-            PhotonNetwork.Destroy(gameObject);
+            stream.SendNext(gameObject.activeInHierarchy);
+        }
+        else if (stream.IsReading)
+        {
+            gameObject.SetActive((bool)stream.ReceiveNext());
         }
     }
 }

@@ -518,6 +518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _photonView: {fileID: 6116858953774195481}
+  _wallet: {fileID: 4397977797738183448}
 --- !u!114 &1318045929439108356
 MonoBehaviour:
   m_ObjectHideFlags: 0

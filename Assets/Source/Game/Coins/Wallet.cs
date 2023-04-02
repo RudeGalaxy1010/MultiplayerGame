@@ -1,4 +1,3 @@
-using Photon.Pun;
 using System;
 using UnityEngine;
 
@@ -12,7 +11,6 @@ public class Wallet : MonoBehaviour
 
     public int Coins => _coins;
 
-    [PunRPC]
     public void AddCoins(int value)
     {
         if (value <= 0)
