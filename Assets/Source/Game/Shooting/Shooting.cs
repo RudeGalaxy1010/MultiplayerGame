@@ -8,26 +8,34 @@ public class Shooting : MonoBehaviour, IPhotonDependComponent
     [SerializeField] private float _fireRate;
     [SerializeField] private BulletSpawner _bulletSpawner;
 
+    private PlayerInput _playerInput;
     private float _cooldownTime;
     private bool _isCoolDown;
 
-    private void Start()
+    public void Construct(PlayerInput playerInput)
     {
+        _playerInput = playerInput;
+        _playerInput.FireButtonPressed += OnFireButtonPressed;
         _cooldownTime = 1f / _fireRate;
         _isCoolDown = false;
     }
 
-    private void Update()
+    private void OnDestroy()
+    {
+        if (_playerInput != null)
+        {
+            _playerInput.FireButtonPressed -= OnFireButtonPressed;
+        }
+    }
+
+    private void OnFireButtonPressed()
     {
         if (_isCoolDown == true)
         {
             return;
         }
 
-        if (Input.GetKey(KeyCode.F))
-        {
-            Fire();
-        }
+        Fire();
     }
 
     private void Fire()
