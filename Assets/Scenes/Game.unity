@@ -1274,6 +1274,7 @@ GameObject:
   - component: {fileID: 1443320523}
   - component: {fileID: 1443320525}
   - component: {fileID: 1443320524}
+  - component: {fileID: 1443320526}
   m_Layer: 0
   m_Name: Foreground
   m_TagString: Untagged
@@ -1342,6 +1343,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1443320522}
   m_CullTransparentMesh: 1
+--- !u!111 &1443320526
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443320522}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 9713103ef0064cc4baa277ee3b953f9c, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 9713103ef0064cc4baa277ee3b953f9c, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!114 &1618397983 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8135886326569738823, guid: 56fae09712773584fb63896d473a98ee, type: 3}
