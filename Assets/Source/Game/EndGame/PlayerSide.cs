@@ -1,5 +1,8 @@
-﻿public enum PlayerSide
+﻿namespace Source.Game.EndGame
 {
-    Master,
-    Slave
+    public enum PlayerSide
+    {
+        Master,
+        Slave
+    }
 }

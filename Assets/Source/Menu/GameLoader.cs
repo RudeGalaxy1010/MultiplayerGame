@@ -1,12 +1,20 @@
 using Photon.Pun;
-using UnityEngine;
+using Source.SceneLoading;
 
-public class GameLoader : MonoBehaviourPunCallbacks
+namespace Source.Menu
 {
-    [SerializeField] private SceneLoader _sceneLoader;
-
-    public override void OnJoinedRoom()
+    public class GameLoader : MonoBehaviourPunCallbacks
     {
-        _sceneLoader.LoadGame();
+        private SceneLoader _sceneLoader;
+
+        private void Start()
+        {
+            _sceneLoader = new SceneLoader();
+        }
+
+        public override void OnJoinedRoom()
+        {
+            _sceneLoader.LoadGame();
+        }
     }
 }

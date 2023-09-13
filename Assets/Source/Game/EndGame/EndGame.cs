@@ -1,53 +1,56 @@
 using Photon.Pun;
+using Source.Game.Coins;
 using UnityEngine;
 
-public class EndGame : MonoBehaviour
+namespace Source.Game.EndGame
 {
-    private const string CheckWinMethodName = "CheckWin";
-    private const string EndGamePanelShowMethodName = "Show";
-
-    [SerializeField] private PhotonView _photonView;
-    [SerializeField] private EndGamePanel _endGamePanel;
-
-    private Health _health;
-    private Wallet _wallet;
-
-    public bool IsWinnerClient(PlayerSide playerSide) =>
-        (playerSide == PlayerSide.Master && PhotonNetwork.IsMasterClient == false)
-        || (playerSide == PlayerSide.Slave && PhotonNetwork.IsMasterClient == true);
-
-    public void Construct(Health health, Wallet wallet)
+    public class EndGame : MonoBehaviour, IEndGame
     {
-        _wallet = wallet;
-        _health = health;
-        _health.Died += OnDied;
-    }
+        private const string CheckWinMethodName = "CheckWin";
+        private const string EndGamePanelShowMethodName = "Show";
+        
+        [SerializeField] private PhotonView _photonView;
 
-    private void OnDestroy()
-    {
-        if (_health != null)
+        private IPlayerHealth _health;
+        private IPlayerWallet _playerWallet;
+
+        public bool IsWinnerClient(PlayerSide playerSide) =>
+            (playerSide == PlayerSide.Master && PhotonNetwork.IsMasterClient == false)
+            || (playerSide == PlayerSide.Slave && PhotonNetwork.IsMasterClient == true);
+
+        public void SetPlayerComponents(IPlayerHealth health, IPlayerWallet playerWallet)
         {
-            _health.Died -= OnDied;
-        }
-    }
-
-    private void OnDied()
-    {
-        PlayerSide playerSide = PhotonNetwork.IsMasterClient ? PlayerSide.Master : PlayerSide.Slave;
-        _photonView.RPC(CheckWinMethodName, RpcTarget.All, playerSide);
-    }
-
-    [PunRPC]
-    private void CheckWin(PlayerSide playerSide)
-    {
-        if (IsWinnerClient(playerSide) == false)
-        {
-            return;
+            _playerWallet = playerWallet;
+            _health = health;
+            _health.Died += OnDied;
         }
 
-        string winnerName = PhotonNetwork.NickName;
-        int coinsValue = _wallet.Coins;
+        public void OnDied()
+        {
+            PlayerSide playerSide = PhotonNetwork.IsMasterClient ? PlayerSide.Master : PlayerSide.Slave;
+            _photonView.RPC(CheckWinMethodName, RpcTarget.All, playerSide);
+        }
 
-        _endGamePanel.PhotonView.RPC(EndGamePanelShowMethodName, RpcTarget.All, winnerName, coinsValue);
+        [PunRPC]
+        public void CheckWin(PlayerSide playerSide)
+        {
+            if (IsWinnerClient(playerSide) == false)
+            {
+                return;
+            }
+
+            string winnerName = PhotonNetwork.NickName;
+            int coinsValue = _playerWallet.Coins;
+
+            _photonView.RPC(EndGamePanelShowMethodName, RpcTarget.All, winnerName, coinsValue);
+        }
+
+        private void OnDestroy()
+        {
+            if (_health != null)
+            {
+                _health.Died -= OnDied;
+            }
+        }
     }
 }

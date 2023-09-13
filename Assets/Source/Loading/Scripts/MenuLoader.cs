@@ -1,22 +1,32 @@
+using Source.SceneLoading;
 using UnityEngine;
 
-public class MenuLoader : MonoBehaviour
+namespace Source.Loading.Scripts
 {
-    [SerializeField] private CreateConnectionToServer _createConnectionToServer;
-    [SerializeField] private SceneLoader _sceneLoader;
-
-    private void OnEnable()
+    public class MenuLoader : MonoBehaviour
     {
-        _createConnectionToServer.Connected += OnConnectionCreated;
-    }
+        [SerializeField] private CreateConnectionToServer _createConnectionToServer;
 
-    private void OnDisable()
-    {
-        _createConnectionToServer.Connected -= OnConnectionCreated;
-    }
+        private SceneLoader _sceneLoader;
 
-    private void OnConnectionCreated()
-    {
-        _sceneLoader.LoadMenu();
+        private void Start()
+        {
+            _sceneLoader = new SceneLoader();
+        }
+
+        private void OnEnable()
+        {
+            _createConnectionToServer.Connected += OnConnectionCreated;
+        }
+
+        private void OnDisable()
+        {
+            _createConnectionToServer.Connected -= OnConnectionCreated;
+        }
+
+        private void OnConnectionCreated()
+        {
+            _sceneLoader.LoadMenu();
+        }
     }
 }

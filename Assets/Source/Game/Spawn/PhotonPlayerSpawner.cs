@@ -1,21 +1,47 @@
 using Photon.Pun;
+using Source.Assets;
+using Source.Bootstrap;
+using Source.Game.Coins;
+using Source.Game.EndGame;
+using Source.Game.Shoot;
+using Source.UI;
 using UnityEngine;
 
-public class PhotonPlayerSpawner : PlayerSpawner
+namespace Source.Game.Spawn
 {
-    [SerializeField] private Player _prefab;
-    [SerializeField] private Transform _masterSpawnPoint;
-    [SerializeField] private Transform _slaveSpawnPoint;
-
-    public override Player CreatePlayer()
+    public class PhotonPlayerSpawner : IPlayerSpawner
     {
-        Vector2 spawnPosition = _masterSpawnPoint.position;
+        private readonly Services _services;
+        private readonly Transform _masterSpawnPoint;
+        private readonly Transform _slaveSpawnPoint;
 
-        if (PhotonNetwork.IsMasterClient == false)
+        public PhotonPlayerSpawner(Services services, Transform masterSpawnPoint, Transform slaveSpawnPoint)
         {
-            spawnPosition = _slaveSpawnPoint.position;
+            _services = services;
+            _masterSpawnPoint = masterSpawnPoint;
+            _slaveSpawnPoint = slaveSpawnPoint;
         }
+        
+        public void CreatePlayer()
+        {
+            Vector2 spawnPosition = _masterSpawnPoint.position;
 
-        return PhotonNetwork.Instantiate(_prefab.name, spawnPosition, Quaternion.identity).GetComponent<Player>();
+            if (PhotonNetwork.IsMasterClient == false)
+            {
+                spawnPosition = _slaveSpawnPoint.position;
+            }
+
+            var assetsProvider = _services.Single<IAssetsProvider>();
+            GameObject player = PhotonNetwork.Instantiate(assetsProvider.PlayerPrefab().name, spawnPosition, Quaternion.identity);
+
+            IPlayerHealth health = player.GetComponent<IPlayerHealth>();
+            ICoinsCollector coinsCollector = player.GetComponent<ICoinsCollector>();
+            IPlayerWallet wallet = _services.Single<IPlayerWallet>();
+
+            _services.Single<IEndGame>().SetPlayerComponents(health, wallet);
+            _services.Single<ICoinsCounter>().SetPlayerWallet(wallet);
+            _services.Single<IShooting>().SetFirePoint(player.GetComponentInChildren<FirePoint>().transform);
+            coinsCollector.SetWallet(wallet);
+        }
     }
 }

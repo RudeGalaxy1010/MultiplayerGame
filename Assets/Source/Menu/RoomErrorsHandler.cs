@@ -1,41 +1,44 @@
-using Photon.Pun;
 using System.Collections;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 
-public class RoomErrorsHandler : MonoBehaviourPunCallbacks
+namespace Source.Menu
 {
-    [SerializeField] private TMP_Text _errorText;
-    [SerializeField] private float _showTime;
-
-    private Coroutine _showErrorCoroutine;
-
-    public override void OnCreateRoomFailed(short returnCode, string message)
+    public class RoomErrorsHandler : MonoBehaviourPunCallbacks
     {
-        ShowError(returnCode, message);
-    }
+        [SerializeField] private TMP_Text _errorText;
+        [SerializeField] private float _showTime;
 
-    public override void OnJoinRoomFailed(short returnCode, string message)
-    {
-        ShowError(returnCode, message);
-    }
+        private Coroutine _showErrorCoroutine;
 
-    private void ShowError(short returnCode, string message)
-    {
-        if (_showErrorCoroutine != null)
+        public override void OnCreateRoomFailed(short returnCode, string message)
         {
-            StopCoroutine(_showErrorCoroutine);
-            _showErrorCoroutine = null;
+            ShowError(returnCode, message);
         }
 
-        _showErrorCoroutine = StartCoroutine(ShowErrorByTime(returnCode, message, _showTime));
-    }
+        public override void OnJoinRoomFailed(short returnCode, string message)
+        {
+            ShowError(returnCode, message);
+        }
 
-    private IEnumerator ShowErrorByTime(short returnCode, string message, float time)
-    {
-        _errorText.text = $"{message}, error code:{returnCode}";
-        yield return new WaitForSeconds(time);
-        _errorText.text = "";
-        _showErrorCoroutine = null;
+        private void ShowError(short returnCode, string message)
+        {
+            if (_showErrorCoroutine != null)
+            {
+                StopCoroutine(_showErrorCoroutine);
+                _showErrorCoroutine = null;
+            }
+
+            _showErrorCoroutine = StartCoroutine(ShowErrorByTime(returnCode, message, _showTime));
+        }
+
+        private IEnumerator ShowErrorByTime(short returnCode, string message, float time)
+        {
+            _errorText.text = $"{message}, error code:{returnCode}";
+            yield return new WaitForSeconds(time);
+            _errorText.text = "";
+            _showErrorCoroutine = null;
+        }
     }
 }

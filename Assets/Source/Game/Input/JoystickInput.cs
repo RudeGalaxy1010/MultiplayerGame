@@ -1,25 +1,36 @@
+using System;
+using Source.Assets;
+using Source.Bootstrap;
 using UnityEngine;
-using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
-public class JoystickInput : PlayerInput
+namespace Source.Game.Input
 {
-    [SerializeField] private Joystick _joystick;
-    [SerializeField] private Button _fireButton;
-
-    public override Vector2 Velocity => _joystick.Direction;
-
-    private void OnEnable()
+    public class JoystickInput : IPlayerInput, ISubscribeHandler
     {
-        _fireButton.onClick.AddListener(OnFireButtonClick);
-    }
+        private readonly MobileInput _mobileMobileInput;
 
-    private void OnDisable()
-    {
-        _fireButton.onClick.RemoveListener(OnFireButtonClick);
-    }
+        public event Action FireButtonPressed;
+        public Vector2 Velocity => _mobileMobileInput.Joystick.Direction;
 
-    private void OnFireButtonClick()
-    {
-        OnFire();
+        public JoystickInput(IAssetsProvider assetsProvider)
+        {
+            _mobileMobileInput = Object.Instantiate(assetsProvider.MobileInput());
+        }
+        
+        public void Subscribe()
+        {
+            _mobileMobileInput.FireButton.onClick.AddListener(OnFireButtonClick);
+        }
+
+        public void Unsubscribe()
+        {
+            _mobileMobileInput.FireButton.onClick.RemoveListener(OnFireButtonClick);
+        }
+
+        private void OnFireButtonClick()
+        {
+            FireButtonPressed?.Invoke();
+        }
     }
 }

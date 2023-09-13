@@ -1,18 +1,21 @@
-using Photon.Pun;
 using System;
+using Photon.Pun;
 
-public class CreateConnectionToServer : MonoBehaviourPunCallbacks
+namespace Source.Loading.Scripts
 {
-    public event Action Connected;
-
-    private void Start()
+    public class CreateConnectionToServer : MonoBehaviourPunCallbacks
     {
-        PhotonNetwork.ConnectUsingSettings();
-        PhotonNetwork.AutomaticallySyncScene = true;
-    }
+        public event Action Connected;
 
-    public override void OnConnectedToMaster()
-    {
-        Connected?.Invoke();
+        private void Start()
+        {
+            PhotonNetwork.ConnectUsingSettings();
+            PhotonNetwork.AutomaticallySyncScene = true;
+        }
+
+        public override void OnConnectedToMaster()
+        {
+            Connected?.Invoke();
+        }
     }
 }

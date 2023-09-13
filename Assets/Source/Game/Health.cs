@@ -1,39 +1,43 @@
-using Photon.Pun;
 using System;
+using Photon.Pun;
 using UnityEngine;
 
-public class Health : MonoBehaviourPun
+namespace Source.Game
 {
-    private const string DamageLessThanZeroMessage = "Damage can't be less or equal 0";
-
-    public event Action HealthChanged;
-    public event Action Died;
-
-    [SerializeField] private int MaxHelath;
-
-    private int _currentHealth;
-
-    private void Start()
+    public class Health : MonoBehaviourPun, IPlayerHealth
     {
-        _currentHealth = MaxHelath;
-    }
+        private const string DamageLessThanZeroMessage = "Damage can't be less or equal 0";
 
-    public float HealthPerc => (float)_currentHealth / MaxHelath;
+        public event Action HealthChanged;
+        public event Action Died;
 
-    [PunRPC]
-    public void TakeDamage(int value)
-    {
-        if (value <= 0)
+        [SerializeField] private int _maxHelath;
+
+        private int _currentHealth;
+
+        private void Start()
         {
-            throw new ArgumentException(DamageLessThanZeroMessage);
+            _currentHealth = _maxHelath;
         }
 
-        _currentHealth -= value;
-        HealthChanged?.Invoke();
+        public float HealthPerc => (float)_currentHealth / _maxHelath;
 
-        if (_currentHealth <= 0)
+        [PunRPC]
+        public void TakeDamage(int value)
         {
-            Died?.Invoke();
+            if (value <= 0)
+            {
+                throw new ArgumentException(DamageLessThanZeroMessage);
+            }
+
+            _currentHealth -= value;
+            HealthChanged?.Invoke();
+
+            if (_currentHealth <= 0)
+            {
+                Died?.Invoke();
+            }
         }
     }
+
 }

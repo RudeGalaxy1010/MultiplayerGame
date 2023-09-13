@@ -1,46 +1,50 @@
 using Photon.Pun;
+using Source.Game;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour, IPunObservable
+namespace Source.UI
 {
-    [SerializeField] private Health _health;
-    [SerializeField] private Image _fill;
-
-    private void OnEnable()
+    public class HealthBar : MonoBehaviour, IPunObservable
     {
-        _health.HealthChanged += OnHealthChanged;
-    }
+        [SerializeField] private Health _health;
+        [SerializeField] private Image _fill;
 
-    private void OnDisable()
-    {
-        _health.HealthChanged -= OnHealthChanged;
-    }
-
-    private void Start()
-    {
-        UpdateHealth();
-    }
-
-    private void OnHealthChanged()
-    {
-        UpdateHealth();
-    }
-
-    private void UpdateHealth()
-    {
-        _fill.fillAmount = _health.HealthPerc;
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
+        private void OnEnable()
         {
-            stream.SendNext(_health.HealthPerc);
+            _health.HealthChanged += OnHealthChanged;
         }
-        else
+
+        private void OnDisable()
         {
-            _fill.fillAmount = (float)stream.ReceiveNext();
+            _health.HealthChanged -= OnHealthChanged;
+        }
+
+        private void Start()
+        {
+            UpdateHealth();
+        }
+
+        private void OnHealthChanged()
+        {
+            UpdateHealth();
+        }
+
+        private void UpdateHealth()
+        {
+            _fill.fillAmount = _health.HealthPerc;
+        }
+
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            if (stream.IsWriting)
+            {
+                stream.SendNext(_health.HealthPerc);
+            }
+            else
+            {
+                _fill.fillAmount = (float)stream.ReceiveNext();
+            }
         }
     }
 }

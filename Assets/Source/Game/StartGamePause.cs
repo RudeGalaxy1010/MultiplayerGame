@@ -1,27 +1,30 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class StartGamePause : MonoBehaviourPunCallbacks
+namespace Source.Game
 {
-    [SerializeField] private GameObject _cover;
-
-    private bool IsRoomFull => PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers;
-
-    private void Start()
+    public class StartGamePause : MonoBehaviourPunCallbacks
     {
-        CheckCover();
-    }
+        [SerializeField] private GameObject _cover;
 
-    private void CheckCover()
-    {
-        if (PhotonNetwork.CurrentRoom != null)
+        private bool IsRoomFull => PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers;
+
+        private void Start()
         {
-            _cover.SetActive(!IsRoomFull);
+            CheckCover();
         }
-    }
 
-    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
-    {
-        CheckCover();
+        private void CheckCover()
+        {
+            if (PhotonNetwork.CurrentRoom != null)
+            {
+                _cover.SetActive(!IsRoomFull);
+            }
+        }
+
+        public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
+        {
+            CheckCover();
+        }
     }
 }

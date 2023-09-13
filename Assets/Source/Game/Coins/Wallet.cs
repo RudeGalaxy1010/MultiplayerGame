@@ -1,24 +1,26 @@
 using System;
-using UnityEngine;
 
-public class Wallet : MonoBehaviour
+namespace Source.Game.Coins
 {
-    private const string DamageLessThanZeroMessage = "Coins value can't be less or equal 0";
-
-    public event Action<int> CoinsValueChanged;
-
-    private int _coins;
-
-    public int Coins => _coins;
-
-    public void AddCoins(int value)
+    public class Wallet : IPlayerWallet
     {
-        if (value <= 0)
-        {
-            throw new ArgumentException(DamageLessThanZeroMessage);
-        }
+        private const string DamageLessThanZeroMessage = "Coins value can't be less or equal 0";
 
-        _coins += value;
-        CoinsValueChanged?.Invoke(_coins);
+        public event Action<int> CoinsValueChanged;
+
+        private int _coins;
+
+        public int Coins => _coins;
+
+        public void AddCoins(int value)
+        {
+            if (value <= 0)
+            {
+                throw new ArgumentException(DamageLessThanZeroMessage);
+            }
+
+            _coins += value;
+            CoinsValueChanged?.Invoke(_coins);
+        }
     }
 }
